@@ -44,14 +44,30 @@
 
 
 ;Ejercicio 6
+(require rackunit)
 (define (doble x)
   (* x x))
 
 (define (distancia p1 p2)
   (sqrt (+ (doble (- (car p2) (car p1))) (doble (- (cdr p2) (cdr p1))))))
 
+(check-equal? (distancia '(0 . 0) '(0 . 10)) 10)
+(check-equal? (distancia '(0 . 0) '(10 . 0)) 10)
+(check-equal? (distancia '(0 . 0) '(10 . 10)) 14.142135623730951)
+
+
+(define (isosceles-distancias? d1 d2 d3)
+  (and
+  (not (= d1 d2 d3))
+  (or (= d1 d2)(= d1 d3)(= d2 d3))))
+
+;Composición de funciones
+
 (define (isosceles? p1 p2 p3)
-  (cond
-    ((= (distancia p1 p2)(distancia p1 p3) (distancia p2 p3)) #f)
-    ((or (= (distancia p1 p2)(distancia p1 p3)) (= (distancia p1 p2)(distancia p2 p3)) (= (distancia p1 p3) (distancia p2 p3))) #t)
-    (else #f)))
+  (isosceles-distancias? (distancia p1 p2) (distancia p1 p3) (distancia p2 p3)))
+
+
+(isosceles? '(0 . 0) '(3 . 0) '(6 . 0)) ; ⇒ #t
+(isosceles? '(2 . 2) '(4 . 0) '(0 . 0)) ; ⇒ #t
+(isosceles? '(0 . 0) '(0 . 0) '(0 . 0)) ; ⇒ #f
+(isosceles? '(0 . 0) '(1 . 1) '(3 . 2)) ; ⇒ #f
