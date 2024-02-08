@@ -133,7 +133,7 @@
       x
       y))
 (define (menor-de-tres-v2 n1 n2 n3)
-  (menor (menor n1 n2) (menor n2 n3)))
+  (menor (menor n1 n2) n3))
 
 (menor-de-tres-v2 2 8 1) ;; ⇒ 1
 (menor-de-tres-v2 3 0 3) ;; ⇒ 0
